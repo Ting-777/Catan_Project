@@ -28,6 +28,7 @@ player_state current_player_state=player_state::idle;
 
 int main(int argc, char *argv[])
 {
+    //qputenv("QT_SCALE_FACTOR", "0.8");
     unsigned seed = chrono::system_clock::now ().time_since_epoch ().count ();
     shuffle (types.begin (), types.end (), default_random_engine (seed));
     seed = chrono::system_clock::now ().time_since_epoch ().count ();

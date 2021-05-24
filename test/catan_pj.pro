@@ -10,6 +10,7 @@ TARGET=catan_pj
 
 SOURCES += \
     construction_button.cpp \
+    dice.cpp \
     main.cpp \
     mainwindow.cpp \
     point.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
 HEADERS += \
     construction_button.h \
     construction_enum.h \
+    dice.h \
     externvars.h \
     house_enum.h \
     mainwindow.h \

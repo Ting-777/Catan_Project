@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/background">
         <file>picture_sources/background/background.png</file>
+        <file>picture_sources/background/colonist.png</file>
     </qresource>
     <qresource prefix="/card">
         <file>picture_sources/card/card_brick.png</file>
@@ -132,5 +133,12 @@
         <file>picture_sources/tile/tile_lumber.png</file>
         <file>picture_sources/tile/tile_ore.png</file>
         <file>picture_sources/tile/tile_wool.png</file>
+    </qresource>
+    <qresource prefix="/rules">
+        <file>picture_sources/rules/city_rule.png</file>
+        <file>picture_sources/rules/longest_road_rule.png</file>
+        <file>picture_sources/rules/point_rule.png</file>
+        <file>picture_sources/rules/road_rule.png</file>
+        <file>picture_sources/rules/settlements_rule.png</file>
     </qresource>
 </RCC>

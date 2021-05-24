@@ -20,11 +20,11 @@ public:
 class Terrain_disp
 {
 private:
-public:
     int x;
     int y;
     QPixmap tile_pic;
     QPixmap num_pic;
+public:
     void display(MainWindow *win);
     Terrain_disp(int i);
 };

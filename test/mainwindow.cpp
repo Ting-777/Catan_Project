@@ -11,8 +11,10 @@
 #include "player_state_enum.h"
 #include <QLabel>
 #include <QDebug>
+#include <QLineEdit>
 #include "construction_button.h"
 #include "construction_enum.h"
+#include "dice.h"
 using namespace std;
 
 extern vector<Terrain_type> types;
@@ -41,6 +43,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->setMinimumSize(1508, 914);
     this->setFixedSize(QSize(1508,914));
     setWindowTitle("Catan");
+    setWindowIcon(QIcon(QPixmap(":/background/picture_sources/background/colonist.png")));
     //显示背景(蓝色海洋)
     QGraphicsScene* bkscene=new QGraphicsScene(this);
     bkscene->addPixmap(QPixmap(":/background/picture_sources/background/background.png"));
@@ -213,6 +216,47 @@ MainWindow::MainWindow(QWidget *parent)
         longest_road_number_labels.push_back(longest_road_number_label);
     }
 
+    //做一个功能未实现的聊天室
+    QLabel* chat_label=new QLabel(this);//聊天室背景
+    QPixmap chat_pic(":/player_related/picture_sources/player_related/bg_section1.png");
+    chat_pic=chat_pic.scaled(355,200);
+    chat_label->resize(355,200);
+    chat_label->setPixmap(chat_pic);
+    chat_label->move(1148,289);
+    QLineEdit* chat_input_box=new QLineEdit(this);
+    chat_input_box->resize(315,33);
+    chat_input_box->move(1168,446);
+    chat_input_box->setText("Say hello");
+
+    //游戏规则显示面板
+    QLabel* rule_bk_label=new QLabel(this);
+    QPixmap rule_bk_pic(":/player_related/picture_sources/player_related/bg_section1.png");
+    rule_bk_pic=rule_bk_pic.scaled(355,280);
+    rule_bk_label->resize(355,280);
+    rule_bk_label->setPixmap(rule_bk_pic);
+    rule_bk_label->move(1148,5);
+    for(int temp=0;temp<3;temp++)
+    {
+        QString temp_str;
+        switch (temp) {
+        case 0:
+            temp_str=":/rules/picture_sources/rules/road_rule.png";
+            break;
+        case 1:
+            temp_str=":/rules/picture_sources/rules/settlements_rule.png";
+            break;
+        case 2:
+            temp_str=":/rules/picture_sources/rules/city_rule.png";
+            break;
+        }
+        QLabel* rule_label=new QLabel(this);
+        QPixmap rule_lable_pic(temp_str);
+        rule_lable_pic=rule_lable_pic.scaled(292,92);
+        rule_label->resize(292,92);
+        rule_label->setPixmap(rule_lable_pic);
+        rule_label->move(1148,5+temp*92);
+    }
+
     //显示terrain
     for(int i = 0; i < 19; i++)
         terrain_disps[i].display(this);
@@ -224,6 +268,11 @@ MainWindow::MainWindow(QWidget *parent)
     buildroad->show();
     build_big_house->show();
     build_small_house->show();
+
+    //骰子按钮
+    Dice *diceButton = new Dice(this);
+    diceButton->show();
+    connect(diceButton,&Dice::clicked,[diceButton](){diceButton->roll();});
 
     //显示Point相关
     for(int temp=0;temp<54;temp++)
