@@ -38,7 +38,7 @@ int Point_disp::get_index()
 }
 void Point_disp::change_circle_index()
 {
-    QString str="E:/Desktop/Catan/images/picture_sources/highlight_circle/icon_highlight_circle_white"+QString::number(current_circle_index%45+15)+".png";
+    QString str=":/highlight_circle/picture_sources/highlight_circle/icon_highlight_circle_white"+QString::number(current_circle_index%45+15)+".png";
     circle=QPixmap(str);
     setIcon(QIcon(circle));
     current_circle_index=current_circle_index%30+1;
@@ -65,12 +65,12 @@ void Point_disp::send_build_big_house_signal()
 
 void Point_disp::display_after_decide(int point_index)
 {
-    //disconnect(this,0,0,0);
     setDisabled(true);
     setEnabled(false);
     disconnect(timer,0,this,0);
     if(point_index!=index)//说明没有在当前点上触发事件，而是在其他某个点上触发，此时当前点停止圆圈显示
     {
+        disconnect(this,0,0,0);
         setIcon(QIcon());
         return;
     }
@@ -80,7 +80,7 @@ void Point_disp::display_after_decide(int point_index)
     case player_type::red_player:
         if(current_player_state==player_state::is_building_small_house)
         {
-            points_scene[index]->addPixmap(QPixmap(tr("E:/Desktop/Catan/picture_sources_PNG/picture_sources/settlements/settlement_red.png")));
+            points_scene[index]->addPixmap(QPixmap(tr(":/settlements/picture_sources/settlements/settlement_red.png")));
             points[index].set_already_house_here(true);
             points[index].set_can_build_house_here(false);
             points[index].set_house_type_here(house_type::red_small_house);
@@ -93,14 +93,14 @@ void Point_disp::display_after_decide(int point_index)
         else if(current_player_state==player_state::is_building_big_house)
         {
             points_scene[index]->clear();
-            points_scene[index]->addPixmap(QPixmap(tr("E:/Desktop/Catan/picture_sources_PNG/picture_sources/city/city_red.png")));
+            points_scene[index]->addPixmap(QPixmap(tr(":/city/picture_sources/city/city_red.png")));
             points[index].set_house_type_here(house_type::red_big_house);
         }
         break;
      case player_type::blue_player:
         if(current_player_state==player_state::is_building_small_house)
         {
-            points_scene[index]->addPixmap(QPixmap(tr("E:/Desktop/Catan/picture_sources_PNG/picture_sources/settlements/settlement_blue.png")));
+            points_scene[index]->addPixmap(QPixmap(tr(":/settlements/picture_sources/settlements/settlement_blue.png")));
             points[index].set_already_house_here(true);
             points[index].set_can_build_house_here(false);
             points[index].set_house_type_here(house_type::blue_small_house);
@@ -113,14 +113,14 @@ void Point_disp::display_after_decide(int point_index)
         else if(current_player_state==player_state::is_building_big_house)
         {
             points_scene[index]->clear();
-            points_scene[index]->addPixmap(QPixmap(tr("E:/Desktop/Catan/picture_sources_PNG/picture_sources/city/city_blue.png")));
+            points_scene[index]->addPixmap(QPixmap(tr(":/city/picture_sources/city/city_blue.png")));
             points[index].set_house_type_here(house_type::blue_big_house);
         }
         break;
       case player_type::green_player:
         if(current_player_state==player_state::is_building_small_house)
         {
-            points_scene[index]->addPixmap(QPixmap(tr("E:/Desktop/Catan/picture_sources_PNG/picture_sources/settlements/settlement_green.png")));
+            points_scene[index]->addPixmap(QPixmap(tr(":/settlements/picture_sources/settlements/settlement_green.png")));
             points[index].set_already_house_here(true);
             points[index].set_can_build_house_here(false);
             points[index].set_house_type_here(house_type::green_small_house);
@@ -133,9 +133,10 @@ void Point_disp::display_after_decide(int point_index)
         else if(current_player_state==player_state::is_building_big_house)
         {
             points_scene[index]->clear();
-            points_scene[index]->addPixmap(QPixmap(tr("E:/Desktop/Catan/picture_sources_PNG/picture_sources/city/city_green.png")));
+            points_scene[index]->addPixmap(QPixmap(tr(":/city/picture_sources/city/city_green.png")));
             points[index].set_house_type_here(house_type::green_big_house);
         }
         break;
     }
+    current_player_state=player_state::idle;
 }

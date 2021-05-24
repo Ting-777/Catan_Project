@@ -30,54 +30,54 @@ Terrain_disp::Terrain_disp(int i)
 {
     switch(types[i]){
     case Terrain_type::brick:
-        tile_pic = QPixmap(QString("E:/Desktop/Catan/picture_sources_PNG/picture_sources/tile/tile_brick.png"));
+        tile_pic = QPixmap(QString(":/tile/picture_sources/tile/tile_brick.png"));
         break;
     case Terrain_type::ore:
-        tile_pic = QPixmap(QString("E:/Desktop/Catan/picture_sources_PNG/picture_sources/tile/tile_ore.png"));
+        tile_pic = QPixmap(QString(":/tile/picture_sources/tile/tile_ore.png"));
         break;
     case Terrain_type::desert:
-        tile_pic = QPixmap(QString("E:/Desktop/Catan/picture_sources_PNG/picture_sources/tile/tile_desert.png"));
+        tile_pic = QPixmap(QString(":/tile/picture_sources/tile/tile_desert.png"));
         break;
     case Terrain_type::lumber:
-        tile_pic = QPixmap(QString("E:/Desktop/Catan/picture_sources_PNG/picture_sources/tile/tile_lumber.png"));
+        tile_pic = QPixmap(QString(":/tile/picture_sources/tile/tile_lumber.png"));
         break;
     case Terrain_type::wool:
-        tile_pic = QPixmap(QString("E:/Desktop/Catan/picture_sources_PNG/picture_sources/tile/tile_wool.png"));
+        tile_pic = QPixmap(QString(":/tile/picture_sources/tile/tile_wool.png"));
         break;
     case Terrain_type::grain:
-        tile_pic = QPixmap(QString("E:/Desktop/Catan/picture_sources_PNG/picture_sources/tile/tile_grain.png"));
+        tile_pic = QPixmap(QString(":/tile/picture_sources/tile/tile_grain.png"));
         break;
     }
     switch(numbers[i]){
     case 2:
-        num_pic = QPixmap(QString("E:/Desktop/Catan/picture_sources_PNG/picture_sources/prob/prob_2.png"));
+        num_pic = QPixmap(QString(":/prob/picture_sources/prob/prob_2.png"));
         break;
     case 3:
-        num_pic = QPixmap(QString("E:/Desktop/Catan/picture_sources_PNG/picture_sources/prob/prob_3.png"));
+        num_pic = QPixmap(QString(":/prob/picture_sources/prob/prob_3.png"));
         break;
     case 4:
-        num_pic = QPixmap(QString("E:/Desktop/Catan/picture_sources_PNG/picture_sources/prob/prob_4.png"));
+        num_pic = QPixmap(QString(":/prob/picture_sources/prob/prob_4.png"));
         break;
     case 5:
-        num_pic = QPixmap(QString("E:/Desktop/Catan/picture_sources_PNG/picture_sources/prob/prob_5.png"));
+        num_pic = QPixmap(QString(":/prob/picture_sources/prob/prob_5.png"));
         break;
     case 6:
-        num_pic = QPixmap(QString("E:/Desktop/Catan/picture_sources_PNG/picture_sources/prob/prob_6.png"));
+        num_pic = QPixmap(QString(":/prob/picture_sources/prob/prob_6.png"));
         break;
     case 8:
-        num_pic = QPixmap(QString("E:/Desktop/Catan/picture_sources_PNG/picture_sources/prob/prob_8.png"));
+        num_pic = QPixmap(QString(":/prob/picture_sources/prob/prob_8.png"));
         break;
     case 9:
-        num_pic = QPixmap(QString("E:/Desktop/Catan/picture_sources_PNG/picture_sources/prob/prob_9.png"));
+        num_pic = QPixmap(QString(":/prob/picture_sources/prob/prob_9.png"));
         break;
     case 10:
-        num_pic = QPixmap(QString("E:/Desktop/Catan/picture_sources_PNG/picture_sources/prob/prob_10.png"));
+        num_pic = QPixmap(QString(":/prob/picture_sources/prob/prob_10.png"));
         break;
     case 11:
-        num_pic = QPixmap(QString("E:/Desktop/Catan/picture_sources_PNG/picture_sources/prob/prob_11.png"));
+        num_pic = QPixmap(QString(":/prob/picture_sources/prob/prob_11.png"));
         break;
     case 12:
-        num_pic = QPixmap(QString("E:/Desktop/Catan/picture_sources_PNG/picture_sources/prob/prob_12.png"));
+        num_pic = QPixmap(QString(":/prob/picture_sources/prob/prob_12.png"));
         break;
     }
 }
