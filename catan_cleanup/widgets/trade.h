@@ -19,7 +19,7 @@ class Trade : public QDialog
 
 public:
     Trade(QWidget *parent = nullptr);
-    ~Trade();
+   ~Trade();
 public slots:
     void plus(bool is_give, int i);
     void minus(bool is_give, int i);

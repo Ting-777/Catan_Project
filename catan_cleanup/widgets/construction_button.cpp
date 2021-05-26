@@ -61,6 +61,7 @@ Construction_button::Construction_button(enum constructon facility,QWidget *pare
         else if(facility==constructon::big_house)
             temp_str_for_facility=":/city/picture_sources/city/city_green.png";
         break;
+     default:break;
     }
     QPixmap facility_pic(temp_str_for_facility);
     facility_pic=facility_pic.scaled(50,50);

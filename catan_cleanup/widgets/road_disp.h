@@ -14,6 +14,7 @@ class Road_disp : public QPushButton
 public:
     explicit Road_disp(int i,QWidget *parent = nullptr);
     int get_index();
+    virtual ~Road_disp(){};
 private:
     int index;
     int x_pos;
