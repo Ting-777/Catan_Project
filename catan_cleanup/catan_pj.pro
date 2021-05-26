@@ -8,11 +8,16 @@ TARGET=catan_pj
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+INCLUDEPATH += entities/
+INCLUDEPATH += enum/
+INCLUDEPATH += externvars/
+INCLUDEPATH += widgets/
 
-include(entities/entities.pri)
-include(enum/enum.pri)
-include(externvars/externvars.pri)
-include(widgets/widgets.pri)
+
+include($$PWD/entities/entities.pri)
+include($$PWD/enum/enum.pri)
+include($$PWD/externvars/externvars.pri)
+include($$PWD/widgets/widgets.pri)
 
 
 SOURCES += main.cpp \

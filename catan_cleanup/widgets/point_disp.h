@@ -15,6 +15,7 @@ class Point_disp : public QPushButton
 public:
     explicit Point_disp(int i,QWidget *parent = nullptr);
     int get_index();
+    virtual ~Point_disp(){};
 private:
     int index;
     int x_pos;
