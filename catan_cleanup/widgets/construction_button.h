@@ -21,9 +21,7 @@ private:
     QLabel* facility_remain;//右上角圆角上的数字
     QLabel* facility_icon;//中间的建筑类型图标显示（路、小房子、大房子）
 
-signals:
 
-public slots:
 
 
 };

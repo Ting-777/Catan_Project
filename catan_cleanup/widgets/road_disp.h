@@ -31,6 +31,7 @@ public slots:
     void display_befor_decide();
     void display_after_decide(int road_index);
     void change_circle_index();
+    void disable_display();
 
 };
 

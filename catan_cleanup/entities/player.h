@@ -18,6 +18,7 @@ public:
     int caculate_road_length();//还没有实现，需要road类
     int caculate_score();
     void set_is_longest(bool longest);
+    set<int> get_occupied_points();
     int get_score();
     int get_road_length();
     map<constructon,int>get_constructions_remained();
@@ -27,7 +28,7 @@ private:
     set<int>occupied_point;//记录占领的点
     vector<int>small_house_owned;//记录建的小房子的点的索引
     vector<int>big_house_owned;//记录建的大房子的点的索引
-    vector<int>occupied_road;//记录占领的路
+    set<int>occupied_road;//记录占领的路
     map<Terrain_type,int>sources_owned;//记录玩家手上的资源
     map<constructon,int>constructions_remained;//记录玩家剩余的可建建筑数
     int road_length;//记录已建的最长道路长度

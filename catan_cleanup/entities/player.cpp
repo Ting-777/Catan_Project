@@ -15,9 +15,13 @@ Player::Player(enum player_type p_type)
     score=0;
 }
 
+set<int> Player:: get_occupied_points()
+{
+    return occupied_point;
+}
 void Player::add_road(int index_of_road)
 {
-    occupied_road.push_back(index_of_road);
+    occupied_road.insert(index_of_road);
 }
 
 void Player::add_point(int index_of_point)

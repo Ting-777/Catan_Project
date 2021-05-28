@@ -1,5 +1,8 @@
 #include "construction_button.h"
 #include "player_enum.h"
+#include "player.h"
+#include <QMessageBox>
+extern vector<Player>players;
 Construction_button::Construction_button(enum constructon facility,QWidget *parent) : QPushButton(parent)
 {
     //按钮位置处理
@@ -88,6 +91,8 @@ Construction_button::Construction_button(enum constructon facility,QWidget *pare
     setStyleSheet(("border:none;"));
     show();
 }
+
+
 
 QLabel* Construction_button::get_facility_icon()
 {

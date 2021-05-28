@@ -20,6 +20,7 @@
 #include "player.h"
 #include "road.h"
 #include "road_disp.h"
+#include <QMessageBox>
 
 using namespace std;
 
@@ -66,6 +67,19 @@ MainWindow::MainWindow(QWidget *parent)
 
     //生成玩家
     Player player_red(player_type::red_player);
+    map<Terrain_type,int> player_red_resources;
+    map<Terrain_type,int> empty_resources;
+    player_red_resources[Terrain_type::ore] = 5;
+    player_red_resources[Terrain_type::brick] = 5;
+    player_red_resources[Terrain_type::grain] = 5;
+    player_red_resources[Terrain_type::lumber] = 5;
+    player_red_resources[Terrain_type::wool] = 5;
+    empty_resources[Terrain_type::ore] = 0;
+    empty_resources[Terrain_type::brick] = 0;
+    empty_resources[Terrain_type::grain] = 0;
+    empty_resources[Terrain_type::lumber] = 0;
+    empty_resources[Terrain_type::wool] = 0;
+    player_red.exchange_sources(empty_resources,player_red_resources);
     Player player_green(player_type::green_player);
     Player player_blue(player_type::blue_player);
     players.push_back(player_red);
@@ -284,36 +298,17 @@ MainWindow::MainWindow(QWidget *parent)
     //显示terrain
     for(int i = 0; i < 19; i++)
         terrain_disps[i].display(this);
+     source_card_number[0]->setText(QString::number(players[0].get_owned_sources()[Terrain_type::lumber]));
+     source_card_number[1]->setText(QString::number(players[0].get_owned_sources()[Terrain_type::grain]));
+     source_card_number[2]->setText(QString::number(players[0].get_owned_sources()[Terrain_type::brick]));
+     source_card_number[3]->setText(QString::number(players[0].get_owned_sources()[Terrain_type::wool]));
+     source_card_number[4]->setText(QString::number(players[0].get_owned_sources()[Terrain_type::ore]));
 
 
     //建筑按钮
     Construction_button* build_road=new Construction_button(constructon::road,this);//点击之后玩家资源修改，建筑数修改，玩家显示修改，道路激活点显示(在point类构造出来后处理)
-    connect(build_road,&QPushButton::clicked,[build_road](){
-        if(current_player==player_type::red_player)
-        {
-            players[0].consume_sources({{Terrain_type::lumber,1},{Terrain_type::brick,1}});
-            players[0].consume_constructions(constructon::road);
-            source_card_number[0]->setText(QString::number(players[0].get_owned_sources()[Terrain_type::lumber]));
-            source_card_number[2]->setText(QString::number(players[0].get_owned_sources()[Terrain_type::brick]));
-            build_road->get_facility_remain()->setText(QString::number(players[0].get_constructions_remained()[constructon::road]));
-        }
-        else if(current_player==player_type::green_player)
-        {
-            players[1].consume_sources({{Terrain_type::lumber,1},{Terrain_type::brick,1}});
-            players[1].consume_constructions(constructon::road);
-            source_card_number[0]->setText(QString::number(players[1].get_owned_sources()[Terrain_type::lumber]));
-            source_card_number[2]->setText(QString::number(players[1].get_owned_sources()[Terrain_type::brick]));
-            build_road->get_facility_remain()->setText(QString::number(players[1].get_constructions_remained()[constructon::road]));
-        }
-        else if(current_player==player_type::blue_player)
-        {
-            players[2].consume_sources({{Terrain_type::lumber,1},{Terrain_type::brick,1}});
-            players[2].consume_constructions(constructon::road);
-            source_card_number[0]->setText(QString::number(players[2].get_owned_sources()[Terrain_type::lumber]));
-            source_card_number[2]->setText(QString::number(players[2].get_owned_sources()[Terrain_type::brick]));
-            build_road->get_facility_remain()->setText(QString::number(players[2].get_constructions_remained()[constructon::road]));
-        }
-    });
+    build_road->get_facility_remain()->setText(QString::number(players[0].get_constructions_remained()[constructon::road]));
+
     Construction_button* build_small_house=new Construction_button(constructon::small_house,this);
     connect(build_small_house,&QPushButton::clicked,[build_small_house](){
         if(current_player==player_type::red_player)
@@ -410,10 +405,35 @@ MainWindow::MainWindow(QWidget *parent)
         Road_disp* r_disp=new Road_disp(i,this);
         roads_disp.push_back(r_disp);
     }
+    connect(build_road,&QPushButton::clicked,build_road,[](){
+        switch (current_player) {
+        case player_type::red_player:
+            if(players[0].get_owned_sources()[Terrain_type::lumber] ==0 ||players[0].get_owned_sources()[Terrain_type::brick] == 0)
+            {
+                QMessageBox::about(NULL, "Construction Failed", "<h2>Insufficient resources!</h2>");
+            };break;
+        case player_type::green_player:
+            if(players[1].get_owned_sources()[Terrain_type::lumber] ==0 ||players[1].get_owned_sources()[Terrain_type::brick] == 0)
+            {
+                QMessageBox::about(NULL, "Construction Failed", "<h2>Insufficient resources!</h2>");
+            };break;
+        case player_type::blue_player:
+            if(players[2].get_owned_sources()[Terrain_type::lumber] ==0 ||players[2].get_owned_sources()[Terrain_type::brick] == 0)
+            {
+                QMessageBox::about(NULL, "Construction Failed", "<h2>Insufficient resources!</h2>");
+            };break;
+        default: break;
+        }});
     for(int temp=0; temp<72;temp++)
         {
             Road_disp* temp_disp=roads_disp[temp];
-            connect(build_road,&QPushButton::clicked,build_road,[temp_disp,build_road](){current_player_state=player_state::is_building_road;
+            connect(build_road,&QPushButton::clicked,build_road,[temp_disp,build_road](){
+                if(players[0].get_owned_sources()[Terrain_type::lumber] ==0 ||players[0].get_owned_sources()[Terrain_type::brick] == 0)
+                {
+                    current_player_state= player_state::idle;
+                    return;
+                }
+                current_player_state=player_state::is_building_road;
                 temp_disp->display_befor_decide();
                 disconnect(build_road,0,temp_disp,0);
                 connect(temp_disp,&Road_disp::clicked,[temp_disp](){temp_disp->send_build_road_signal();});
@@ -468,6 +488,26 @@ MainWindow::MainWindow(QWidget *parent)
             }
             connect(temp_disp,&Point_disp::clicked,[temp_disp](){temp_disp->send_build_small_house_signal();});
         });
+    }
+
+    for(int temp = 0; temp < 72; temp++)
+    {
+    connect(roads_disp[temp],&Road_disp::has_built_road,build_road,[build_road](){
+        if(current_player==player_type::red_player)
+        {
+            build_road->get_facility_remain()->setText(QString::number(players[0].get_constructions_remained()[constructon::road]));
+        }
+        else if(current_player==player_type::green_player)
+        {
+
+            build_road->get_facility_remain()->setText(QString::number(players[1].get_constructions_remained()[constructon::road]));
+        }
+        else if(current_player==player_type::blue_player)
+        {
+
+            build_road->get_facility_remain()->setText(QString::number(players[2].get_constructions_remained()[constructon::road]));
+        }
+    });
     }
 }
 
