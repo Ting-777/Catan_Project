@@ -1,5 +1,7 @@
 #include "player.h"
+#include <iostream>
 extern vector<Point> points;
+extern vector<Road> roads;
 extern vector<Terrain> terrains;
 Player::Player(enum player_type p_type)
 {
@@ -19,6 +21,7 @@ set<int> Player:: get_occupied_points()
 {
     return occupied_point;
 }
+
 void Player::add_road(int index_of_road)
 {
     occupied_road.insert(index_of_road);
@@ -48,6 +51,72 @@ int Player::caculate_score()
     if(is_longest)temp_score+=2;
     score=temp_score;
     return score;
+}
+
+int Player::dfs(int point_index, set<int> unvisited_road)
+{
+
+
+    if (points[point_index].get_already_house_here() && find(small_house_owned.begin(),small_house_owned.end(),point_index)== small_house_owned.end()
+           && find(big_house_owned.begin(),big_house_owned.end(),point_index)== big_house_owned.end())
+        return 0;
+    if (unvisited_road.empty())
+            return 0;
+
+    int cmax = 0;
+    vector<int> initial_loop_roads_index = {};
+    for(auto neighbour_index : points[point_index].get_index_for_neighbour_point())
+    {
+         if (find(occupied_point.begin(),occupied_point.end(),neighbour_index)!= occupied_point.end())
+         {
+
+             for(auto road_index : occupied_road)
+             {
+
+                 vector<int> endpoint = roads[road_index].get_endpoints();
+
+                 if(point_index == endpoint[0] || point_index == endpoint[1])
+                 {
+                     if(neighbour_index == endpoint[0] || neighbour_index == endpoint[1])
+                         initial_loop_roads_index.push_back(road_index);
+
+                 }
+             }
+         }
+    }
+    for (auto roads_initial : initial_loop_roads_index)
+    {
+
+        if(find(unvisited_road.begin(),unvisited_road.end(),roads_initial)!= unvisited_road.end())
+        {
+            vector<int> endpoint = roads[roads_initial].get_endpoints();
+            int next_point_index = (endpoint[0]!= point_index)?endpoint[0]:endpoint[1];
+            auto erase_iter = find(unvisited_road.begin(),unvisited_road.end(),roads_initial);
+            int visited_index = *(erase_iter);
+
+            unvisited_road.erase(erase_iter);
+            cmax = max(cmax, 1 + dfs(next_point_index,unvisited_road));
+           unvisited_road.insert(visited_index);
+        }
+    }
+    return cmax;
+
+}
+
+int Player::caculate_road_length()
+{
+    if (occupied_road.empty())
+        return 0;
+    if(occupied_road.size() == 1)
+        return 1;
+
+    int road_max = 0;
+    for(auto point : occupied_point)
+    {
+
+        road_max = max(road_max, dfs(point,occupied_road));
+    }
+    return road_max;
 }
 
 void Player::set_is_longest(bool longest)

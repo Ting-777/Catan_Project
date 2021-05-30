@@ -5,6 +5,7 @@
 #include "terrain.h"
 #include <map>
 #include "point.h"
+#include "road.h"
 #include <set>
 #include "construction_enum.h"
 class Player
@@ -20,6 +21,7 @@ public:
     void set_is_longest(bool longest);
     set<int> get_occupied_points();
     int get_score();
+    int dfs(int point_index, set<int> unvisited_road);
     int get_road_length();
     map<constructon,int>get_constructions_remained();
     map<Terrain_type,int> get_owned_sources();

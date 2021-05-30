@@ -7,6 +7,7 @@
 #include "road.h"
 #include <QTimer>
 #include <QLabel>
+#include <iostream>
 #include <QDebug>
 #include <QMessageBox>
 
@@ -73,7 +74,8 @@ void Road_disp::display_befor_decide()
     case player_type::red_player:
     {
         set<int> occupiedPoints = players[0].get_occupied_points();
-        if(occupiedPoints.find(roads[index].get_endpoints()[0]) != occupiedPoints.end() || occupiedPoints.find(roads[index].get_endpoints()[1]) != occupiedPoints.end())
+        if(std::find(occupiedPoints.begin(),occupiedPoints.end(),roads[index].get_endpoints()[0]) != occupiedPoints.end() ||
+           std::find(occupiedPoints.begin(),occupiedPoints.end(),roads[index].get_endpoints()[1]) != occupiedPoints.end())
         {
             setDisabled(false);
             setEnabled(true);
@@ -85,7 +87,9 @@ void Road_disp::display_befor_decide()
     case player_type::green_player:
     {
         set<int> occupiedPoints = players[1].get_occupied_points();
-        if(occupiedPoints.find(roads[index].get_endpoints()[0]) != occupiedPoints.end() || occupiedPoints.find(roads[index].get_endpoints()[1]) != occupiedPoints.end())
+
+        if(std::find(occupiedPoints.begin(),occupiedPoints.end(),roads[index].get_endpoints()[0]) != occupiedPoints.end() ||
+           std::find(occupiedPoints.begin(),occupiedPoints.end(),roads[index].get_endpoints()[1]) != occupiedPoints.end())
         {
             setDisabled(false);
             setEnabled(true);
@@ -97,7 +101,8 @@ void Road_disp::display_befor_decide()
     case player_type::blue_player:
     {
         set<int> occupiedPoints = players[2].get_occupied_points();
-        if(occupiedPoints.find(roads[index].get_endpoints()[0]) != occupiedPoints.end() || occupiedPoints.find(roads[index].get_endpoints()[1]) != occupiedPoints.end())
+        if(std::find(occupiedPoints.begin(),occupiedPoints.end(),roads[index].get_endpoints()[0]) != occupiedPoints.end() ||
+           std::find(occupiedPoints.begin(),occupiedPoints.end(),roads[index].get_endpoints()[1]) != occupiedPoints.end())
         {
             setDisabled(false);
             setEnabled(true);
@@ -155,7 +160,9 @@ void Road_disp::display_after_decide(int road_index)
 
             players[0].consume_sources({{Terrain_type::lumber,1},{Terrain_type::brick,1}});
             players[0].consume_constructions(constructon::road);
+
             players[0].add_road(index);
+
             players[0].add_point(roads[index].get_endpoints()[0]);
             players[0].add_point(roads[index].get_endpoints()[1]);
             source_card_number[0]->setText(QString::number(players[0].get_owned_sources()[Terrain_type::lumber]));
@@ -164,6 +171,7 @@ void Road_disp::display_after_decide(int road_index)
             roads_scene[index]->addPixmap(QPixmap(tr(":/road/picture_sources/road/road_red.png")).transformed(rotateMatrix,Qt::SmoothTransformation));
             roads[index].set_built();
             roads[index].set_owned_player(player_type::red_player);
+
             disconnect(this,0,this,0);
 
         }

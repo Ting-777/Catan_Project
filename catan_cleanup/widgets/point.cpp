@@ -8,6 +8,7 @@ vector<int>point_y_pos={91,91,91,128,128,128,128,206,206,206,206,243,243,243,243
                         321,321,321,321,321,358,358,358,358,358,358,436,436,436,436,
                         436,436,473,473,473,473,473,551,551,551,551,551,588,588,588,
                         588,666,666,666,666,703,703,703};
+
 vector<vector<int>>points_neighbour_terrain={{0},{1},{2},
                                             {0},{0,1},{1,2},{2},
                                             {0,3},{0,1,4},{1,2,5},{2,6},
@@ -37,6 +38,7 @@ Point::Point(int i)
     index_for_point=i;
     index_for_neighbour_point=points_neighbour_points[i];
     index_for_neighbour_terrain=points_neighbour_terrain[i];
+
     direction_able_to_counstruct_road=points_neighbour_points[i];
     direction_already_with_road={};
     owner_of_this_point={};
