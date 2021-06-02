@@ -1,6 +1,7 @@
 debug/player.o
 debug/construction_button.o
 debug/dice.o
+debug/end_turn_button.o
 debug/point.o
 debug/point_disp.o
 debug/road.o
@@ -14,6 +15,7 @@ debug/main.o
 debug/mainwindow.o
 debug/qrc_picture_sources.o
 debug/moc_construction_button.o
+debug/moc_end_turn_button.o
 debug/moc_point_disp.o
 debug/moc_road_disp.o
 debug/moc_trade.o

@@ -7,7 +7,7 @@
 *****************************************************************************/
 
 #include <memory>
-#include "../widgets/construction_button.h"
+#include "../../../../../6_1_catan/widgets/construction_button.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)

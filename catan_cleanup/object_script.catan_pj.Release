@@ -1,6 +1,7 @@
 release/player.o
 release/construction_button.o
 release/dice.o
+release/end_turn_button.o
 release/point.o
 release/point_disp.o
 release/road.o
@@ -14,6 +15,7 @@ release/main.o
 release/mainwindow.o
 release/qrc_picture_sources.o
 release/moc_construction_button.o
+release/moc_end_turn_button.o
 release/moc_point_disp.o
 release/moc_road_disp.o
 release/moc_trade.o
