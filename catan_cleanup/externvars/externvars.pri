@@ -1,1 +1,0 @@
-HEADERS += $$PWD/externvars.h
