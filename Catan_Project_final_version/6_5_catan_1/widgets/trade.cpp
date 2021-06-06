@@ -6,7 +6,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QMessageBox>
-#include <iostream>
+
 using namespace std;
 
 extern player_type current_player;
@@ -149,6 +149,12 @@ Trade::Trade(QWidget *parent) :
                    "border-color:rgba(255,255,255,200);"
                    "color:rgba(0,0,0,200);"
                    "}");
+    QString blueHint = "Brick: "+QString::number(players[2].get_owned_sources().find(Terrain_type::brick)->second)
+                      +"\nGrain: "+QString::number(players[2].get_owned_sources().find(Terrain_type::grain)->second)
+                      +"\nLumber: "+QString::number(players[2].get_owned_sources().find(Terrain_type::lumber)->second)
+                      +"\nOre: "+QString::number(players[2].get_owned_sources().find(Terrain_type::ore)->second)
+                      +"\nWool: "+QString::number(players[2].get_owned_sources().find(Terrain_type::wool)->second);
+    blueButton->setToolTip(blueHint);
     connect(blueButton,&QPushButton::clicked,this,[this](){this->trade_with_player(player_type::blue_player);});
     blueButton->show();
     acceptButtons.push_back(blueButton);
@@ -180,6 +186,12 @@ Trade::Trade(QWidget *parent) :
                    "border-color:rgba(255,255,255,200);"
                    "color:rgba(0,0,0,200);"
                    "}");
+    QString redHint = "Brick: "+QString::number(players[0].get_owned_sources().find(Terrain_type::brick)->second)
+                      +"\nGrain: "+QString::number(players[0].get_owned_sources().find(Terrain_type::grain)->second)
+                      +"\nLumber: "+QString::number(players[0].get_owned_sources().find(Terrain_type::lumber)->second)
+                      +"\nOre: "+QString::number(players[0].get_owned_sources().find(Terrain_type::ore)->second)
+                      +"\nWool: "+QString::number(players[0].get_owned_sources().find(Terrain_type::wool)->second);
+    redButton->setToolTip(redHint);
     connect(redButton,&QPushButton::clicked,this,[this](){this->trade_with_player(player_type::red_player);});
     redButton->show();
     acceptButtons.push_back(redButton);
@@ -211,6 +223,12 @@ Trade::Trade(QWidget *parent) :
                    "border-color:rgba(255,255,255,200);"
                    "color:rgba(0,0,0,200);"
                    "}");
+    QString greenHint = "Brick: "+QString::number(players[1].get_owned_sources().find(Terrain_type::brick)->second)
+                      +"\nGrain: "+QString::number(players[1].get_owned_sources().find(Terrain_type::grain)->second)
+                      +"\nLumber: "+QString::number(players[1].get_owned_sources().find(Terrain_type::lumber)->second)
+                      +"\nOre: "+QString::number(players[1].get_owned_sources().find(Terrain_type::ore)->second)
+                      +"\nWool: "+QString::number(players[1].get_owned_sources().find(Terrain_type::wool)->second);
+    greenButton->setToolTip(greenHint);
     connect(greenButton,&QPushButton::clicked,this,[this](){this->trade_with_player(player_type::green_player);});
     greenButton->show();
     acceptButtons.push_back(greenButton);
@@ -285,22 +303,28 @@ void Trade::trade_with_bank()
                 zeroFlag = false;
                 break;
             }
+    //不能换相同的资源
     if(zeroFlag == true)
     {
         QMessageBox::about(NULL, "Warning", "<h2>You cannot trade nothing for nothing!</h2>");
         return;
     }
+    for(int i = 0; i < 5; i++)
+        if(give[i] != 0 && want[i] != 0)
+        {
+            QMessageBox::about(NULL, "Warning", "<h2>You cannot trade for the same resource!</h2>");
+            return;
+        }
     //检查比例
     vector<int> givetemp = give;
     for(int i = 0; i < 5; i++)
     {
-        int ruletemp = bankRules[i];
         for(int j = 0; j < want[i]; j++)
         {
             vector<int> giveabletemp = {0,0,0,0,0};
             for(int k = 0; k < 5; k++)
             {
-                if (givetemp[k] >= ruletemp) giveabletemp[k] = givetemp[k];
+                if (givetemp[k] >= bankRules[k]) giveabletemp[k] = givetemp[k];
             }
             bool isZerotemp = true;
             for(auto l:giveabletemp)
@@ -322,14 +346,14 @@ void Trade::trade_with_bank()
                 int minIndex = -1;
                 for(int m = 0; m < 5; m++)
                 {
-                    if(giveabletemp[m] != 0 && giveabletemp[m] < min)
+                    if(bankRules[m] != 0 && bankRules[m] < min && giveabletemp[m] > 0)
                     {
                         minIndex = m;
-                        min = giveabletemp[m];
+                        min = bankRules[m];
                     }
                 }
                 if(minIndex >= 0)
-                    givetemp[minIndex] -= ruletemp;
+                    givetemp[minIndex] -= min;
             }
         }
     }
@@ -388,6 +412,13 @@ void Trade::trade_with_player(player_type counterpartType)
         QMessageBox::about(NULL, "Warning", "<h2>You cannot trade nothing for nothing!</h2>");
         return;
     }
+    //不能换相同的资源
+    for(int i = 0; i < 5; i++)
+        if(give[i] != 0 && want[i] != 0)
+        {
+            QMessageBox::about(NULL, "Warning", "<h2>You cannot trade for the same resource!</h2>");
+            return;
+        }
     //不能自己与自己交易
     if (playerType == counterpartType)
     {
