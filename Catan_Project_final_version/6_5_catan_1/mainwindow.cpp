@@ -398,10 +398,12 @@ MainWindow::MainWindow(QWidget *parent)
         Road_disp* r_disp=new Road_disp(i,this);
         roads_disp.push_back(r_disp);
     }
-    connect(build_road,&QPushButton::clicked,[](){
+    connect(build_road,&QPushButton::clicked,[tradeButton,end_turn_button](){
         construction_buttons[0]->setDisabled(true);
         construction_buttons[1]->setDisabled(true);
         construction_buttons[2]->setDisabled(true);
+        tradeButton->setDisabled(true);
+        end_turn_button->setDisabled(true);
         switch (current_player) {
         case player_type::red_player:
             if(players[0].get_owned_sources()[Terrain_type::lumber] ==0 ||players[0].get_owned_sources()[Terrain_type::brick] == 0)
@@ -410,6 +412,8 @@ MainWindow::MainWindow(QWidget *parent)
                 construction_buttons[0]->setEnabled(true);
                 construction_buttons[1]->setEnabled(true);
                 construction_buttons[2]->setEnabled(true);
+                tradeButton->setEnabled(true);
+                end_turn_button->setEnabled(true);
             };break;
         case player_type::green_player:
             if(players[1].get_owned_sources()[Terrain_type::lumber] ==0 ||players[1].get_owned_sources()[Terrain_type::brick] == 0)
@@ -418,6 +422,8 @@ MainWindow::MainWindow(QWidget *parent)
                 construction_buttons[0]->setEnabled(true);
                 construction_buttons[1]->setEnabled(true);
                 construction_buttons[2]->setEnabled(true);
+                tradeButton->setEnabled(true);
+                end_turn_button->setEnabled(true);
             };break;
         case player_type::blue_player:
             if(players[2].get_owned_sources()[Terrain_type::lumber] ==0 ||players[2].get_owned_sources()[Terrain_type::brick] == 0)
@@ -426,6 +432,8 @@ MainWindow::MainWindow(QWidget *parent)
                 construction_buttons[0]->setEnabled(true);
                 construction_buttons[1]->setEnabled(true);
                 construction_buttons[2]->setEnabled(true);
+                tradeButton->setEnabled(true);
+                end_turn_button->setEnabled(true);
             };break;
         default: break;
         }});
@@ -467,10 +475,14 @@ MainWindow::MainWindow(QWidget *parent)
     for(int temp=0;temp<72;temp++)
     {
         Road_disp* r1=roads_disp[temp];
-        connect(r1,&Road_disp::has_built_road,[](){
+        connect(r1,&Road_disp::has_built_road,[tradeButton,end_turn_button](){
+            if(!is_in_normal_round)
+               return;
             construction_buttons[0]->setEnabled(true);
             construction_buttons[1]->setEnabled(true);
-            construction_buttons[2]->setEnabled(true);});
+            construction_buttons[2]->setEnabled(true);
+            tradeButton->setEnabled(true);
+            end_turn_button->setEnabled(true);});
         for(int temp1=0;temp1<72;temp1++)
         {
 
@@ -538,10 +550,12 @@ MainWindow::MainWindow(QWidget *parent)
         points_disp.push_back(p_disp);
     }
     //建小房子的按钮连接关系建立
-    connect(build_small_house,&QPushButton::clicked,build_small_house,[](){
+    connect(build_small_house,&QPushButton::clicked,build_small_house,[tradeButton,end_turn_button](){
         construction_buttons[0]->setDisabled(true);
         construction_buttons[1]->setDisabled(true);
         construction_buttons[2]->setDisabled(true);
+        tradeButton->setDisabled(true);
+        end_turn_button->setDisabled(true);
         switch (current_player) {
         case player_type::red_player:
             if(players[0].get_owned_sources()[Terrain_type::lumber] <1 ||players[0].get_owned_sources()[Terrain_type::brick] <1||players[0].get_owned_sources()[Terrain_type::wool]<1 ||players[0].get_owned_sources()[Terrain_type::grain] <1)
@@ -550,6 +564,8 @@ MainWindow::MainWindow(QWidget *parent)
                 construction_buttons[0]->setEnabled(true);
                 construction_buttons[1]->setEnabled(true);
                 construction_buttons[2]->setEnabled(true);
+                tradeButton->setEnabled(true);
+                end_turn_button->setEnabled(true);
             };break;
         case player_type::green_player:
             if(players[1].get_owned_sources()[Terrain_type::lumber] <1 ||players[1].get_owned_sources()[Terrain_type::brick] <1||players[1].get_owned_sources()[Terrain_type::wool]<1 ||players[1].get_owned_sources()[Terrain_type::grain] <1)
@@ -558,6 +574,8 @@ MainWindow::MainWindow(QWidget *parent)
                 construction_buttons[0]->setEnabled(true);
                 construction_buttons[1]->setEnabled(true);
                 construction_buttons[2]->setEnabled(true);
+                tradeButton->setEnabled(true);
+                end_turn_button->setEnabled(true);
             };break;
         case player_type::blue_player:
             if(players[2].get_owned_sources()[Terrain_type::lumber] <1 ||players[2].get_owned_sources()[Terrain_type::brick] <1||players[2].get_owned_sources()[Terrain_type::wool]<1 ||players[2].get_owned_sources()[Terrain_type::grain] <1)
@@ -566,11 +584,13 @@ MainWindow::MainWindow(QWidget *parent)
                 construction_buttons[0]->setEnabled(true);
                 construction_buttons[1]->setEnabled(true);
                 construction_buttons[2]->setEnabled(true);
+                tradeButton->setEnabled(true);
+                end_turn_button->setEnabled(true);
             };break;
         default: break;
         }});
     //建大房子按钮连接关系建立
-    connect(build_big_house,&QPushButton::clicked,build_big_house,[](){
+    connect(build_big_house,&QPushButton::clicked,build_big_house,[tradeButton,end_turn_button](){
         switch (current_player) {
         construction_buttons[0]->setDisabled(true);
         construction_buttons[1]->setDisabled(true);
@@ -582,6 +602,8 @@ MainWindow::MainWindow(QWidget *parent)
                 construction_buttons[0]->setEnabled(true);
                 construction_buttons[1]->setEnabled(true);
                 construction_buttons[2]->setEnabled(true);
+                tradeButton->setEnabled(true);
+                end_turn_button->setEnabled(true);
             };break;
         case player_type::green_player:
             if(players[1].get_owned_sources()[Terrain_type::grain]<2||players[1].get_owned_sources()[Terrain_type::ore]<3)
@@ -590,6 +612,8 @@ MainWindow::MainWindow(QWidget *parent)
                 construction_buttons[0]->setEnabled(true);
                 construction_buttons[1]->setEnabled(true);
                 construction_buttons[2]->setEnabled(true);
+                tradeButton->setEnabled(true);
+                end_turn_button->setEnabled(true);
             };break;
         case player_type::blue_player:
             if(players[2].get_owned_sources()[Terrain_type::grain]<2||players[2].get_owned_sources()[Terrain_type::ore]<3)
@@ -598,6 +622,8 @@ MainWindow::MainWindow(QWidget *parent)
                 construction_buttons[0]->setEnabled(true);
                 construction_buttons[1]->setEnabled(true);
                 construction_buttons[2]->setEnabled(true);
+                tradeButton->setEnabled(true);
+                end_turn_button->setEnabled(true);
             };break;
         default: break;
         }});
@@ -614,13 +640,13 @@ MainWindow::MainWindow(QWidget *parent)
                                 return;
                             }break;
                             case player_type::green_player:
-                            if(players[0].get_owned_sources()[Terrain_type::lumber] <1 ||players[0].get_owned_sources()[Terrain_type::brick] <1||players[0].get_owned_sources()[Terrain_type::wool]<1 ||players[0].get_owned_sources()[Terrain_type::grain] <1)
+                            if(players[1].get_owned_sources()[Terrain_type::lumber] <1 ||players[1].get_owned_sources()[Terrain_type::brick] <1||players[0].get_owned_sources()[Terrain_type::wool]<1 ||players[0].get_owned_sources()[Terrain_type::grain] <1)
                             {
                                 current_player_state= player_state::idle;
                                 return;
                             }break;
                             case player_type::blue_player:
-                            if(players[0].get_owned_sources()[Terrain_type::lumber] <1 ||players[0].get_owned_sources()[Terrain_type::brick] <1||players[0].get_owned_sources()[Terrain_type::wool]<1 ||players[0].get_owned_sources()[Terrain_type::grain] <1)
+                            if(players[2].get_owned_sources()[Terrain_type::lumber] <1 ||players[2].get_owned_sources()[Terrain_type::brick] <1||players[0].get_owned_sources()[Terrain_type::wool]<1 ||players[0].get_owned_sources()[Terrain_type::grain] <1)
                             {
                                 current_player_state= player_state::idle;
                                 return;
@@ -669,10 +695,14 @@ MainWindow::MainWindow(QWidget *parent)
     for(int temp=0;temp<54;temp++)
     {
         Point_disp* p1=points_disp[temp];
-        connect(p1,&Point_disp::has_built_small_house,[](){
+        connect(p1,&Point_disp::has_built_small_house,[tradeButton,end_turn_button](){
+            if(!is_in_normal_round)
+               return;
             construction_buttons[0]->setEnabled(true);
             construction_buttons[1]->setEnabled(true);
-            construction_buttons[2]->setEnabled(true);});
+            construction_buttons[2]->setEnabled(true);
+            tradeButton->setEnabled(true);
+            end_turn_button->setEnabled(true);});
         for(int temp1=0;temp1<54;temp1++)
         {
 
@@ -683,10 +713,14 @@ MainWindow::MainWindow(QWidget *parent)
     for(int temp=0;temp<54;temp++)
     {
         Point_disp* p1=points_disp[temp];
-        connect(p1,&Point_disp::has_built_big_house,[](){
+        connect(p1,&Point_disp::has_built_big_house,[tradeButton,end_turn_button](){
+            if(!is_in_normal_round)
+               return;
             construction_buttons[0]->setEnabled(true);
             construction_buttons[1]->setEnabled(true);
-            construction_buttons[2]->setEnabled(true);});
+            construction_buttons[2]->setEnabled(true);
+            tradeButton->setEnabled(true);
+            end_turn_button->setEnabled(true);});
         for(int temp1=0;temp1<54;temp1++)
         {
 

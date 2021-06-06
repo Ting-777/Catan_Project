@@ -9,7 +9,7 @@ Player::Player(enum player_type p_type)
     occupied_road={};
     small_house_owned={};
     big_house_owned={};
-    sources_owned={{Terrain_type::lumber,0},{Terrain_type::wool,0},{Terrain_type::brick,0},{Terrain_type::grain,0},{Terrain_type::ore,0}};
+    sources_owned={{Terrain_type::lumber,20},{Terrain_type::wool,20},{Terrain_type::brick,20},{Terrain_type::grain,20},{Terrain_type::ore,20}};
     constructions_remained={{constructon::road,15},{constructon::small_house,5},{constructon::big_house,4}};
     road_length=0;
     is_longest=false;

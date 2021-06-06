@@ -78,7 +78,7 @@ void Point_disp::display_befor_decide()
             }
             break;
         case player_type::green_player:
-            if(players[1].get_occupied_points().find(index)!=players[0].get_occupied_points().end())
+            if(players[1].get_occupied_points().find(index)!=players[1].get_occupied_points().end())
             {
                 setDisabled(false);
                 setEnabled(true);
