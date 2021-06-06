@@ -9,6 +9,9 @@
 #include <QLabel>
 #include <QDebug>
 #include <QMessageBox>
+#include "construction_button.h"
+#include "end_turn_button.h"
+#include "tradebutton.h"
 
 extern vector<int>road_x_pos;
 extern vector<int>road_y_pos;
@@ -25,6 +28,10 @@ extern vector<QLabel*>longest_road_number_labels;//顺序存放　red green blue
 extern vector<Player>players;//顺序存放red green blue玩家对象
 extern int game_status;
 extern bool is_in_normal_round;
+extern vector<Construction_button*>construction_buttons;//顺序存放建路、建小房子、建大房子按钮
+extern End_turn_button* end_turn_button;
+extern TradeButton *tradeButton;
+
 
 Road_disp::Road_disp(int i,QWidget *parent) : QPushButton(parent)
 {
@@ -78,8 +85,14 @@ void Road_disp::display_befor_decide()
         {
             setDisabled(false);
             setEnabled(true);
+            construction_buttons[0]->setDisabled(true);
+            construction_buttons[1]->setDisabled(true);
+            construction_buttons[2]->setDisabled(true);
+            tradeButton->setDisabled(true);
+            end_turn_button->setDisabled(true);
             current_circle_index = 0;
             connect(timer,&QTimer::timeout,this,[this](){change_circle_index();});
+
             return;
         };
     }break;
@@ -90,6 +103,11 @@ void Road_disp::display_befor_decide()
         {
             setDisabled(false);
             setEnabled(true);
+            construction_buttons[0]->setDisabled(true);
+            construction_buttons[1]->setDisabled(true);
+            construction_buttons[2]->setDisabled(true);
+            tradeButton->setDisabled(true);
+            end_turn_button->setDisabled(true);
             current_circle_index = 0;
             connect(timer,&QTimer::timeout,this,[this](){change_circle_index();});
             return;
@@ -102,6 +120,11 @@ void Road_disp::display_befor_decide()
         {
             setDisabled(false);
             setEnabled(true);
+            construction_buttons[0]->setDisabled(true);
+            construction_buttons[1]->setDisabled(true);
+            construction_buttons[2]->setDisabled(true);
+            tradeButton->setDisabled(true);
+            end_turn_button->setDisabled(true);
             current_circle_index = 0;
             connect(timer,&QTimer::timeout,this,[this](){change_circle_index();});
             return;

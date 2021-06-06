@@ -7,6 +7,9 @@
 #include "player.h"
 #include <QLabel>
 #include "construction_button.h"
+#include "end_turn_button.h"
+#include "tradebutton.h"
+
 extern vector<int>point_x_pos;
 extern vector<int>point_y_pos;
 extern player_type current_player;
@@ -19,6 +22,8 @@ extern vector<QLabel*>score_labels;//顺序存放red green blue玩家的分数QL
 extern vector<QLabel*>source_card_number;//顺序存放lumber grain brick wool ore的资源数QLabel
 extern vector<QLabel*>rescard_number_labels;//顺序存放red green blue玩家的手上资源牌总数QLabel
 extern vector<Construction_button*>construction_buttons;
+extern End_turn_button* end_turn_button;
+extern TradeButton *tradeButton;
 extern int game_status;
 extern bool is_in_normal_round;
 extern bool is_sea_shore_mode;
@@ -72,6 +77,11 @@ void Point_disp::display_befor_decide()
             {
                 setDisabled(false);
                 setEnabled(true);
+                construction_buttons[0]->setDisabled(true);
+                construction_buttons[1]->setDisabled(true);
+                construction_buttons[2]->setDisabled(true);
+                tradeButton->setDisabled(true);
+                end_turn_button->setDisabled(true);
                 current_circle_index = 0;
                 connect(timer,&QTimer::timeout,this,[this](){change_circle_index();});
                 return;
@@ -82,6 +92,11 @@ void Point_disp::display_befor_decide()
             {
                 setDisabled(false);
                 setEnabled(true);
+                construction_buttons[0]->setDisabled(true);
+                construction_buttons[1]->setDisabled(true);
+                construction_buttons[2]->setDisabled(true);
+                tradeButton->setDisabled(true);
+                end_turn_button->setDisabled(true);
                 current_circle_index = 0;
                 connect(timer,&QTimer::timeout,this,[this](){change_circle_index();});
                 return;
@@ -92,6 +107,11 @@ void Point_disp::display_befor_decide()
             {
                 setDisabled(false);
                 setEnabled(true);
+                construction_buttons[0]->setDisabled(true);
+                construction_buttons[1]->setDisabled(true);
+                construction_buttons[2]->setDisabled(true);
+                tradeButton->setDisabled(true);
+                end_turn_button->setDisabled(true);
                 current_circle_index = 0;
                 connect(timer,&QTimer::timeout,this,[this](){change_circle_index();});
                 return;
@@ -120,6 +140,11 @@ void Point_disp::display_befor_decide()
             {
                 setDisabled(false);
                 setEnabled(true);
+                construction_buttons[0]->setDisabled(true);
+                construction_buttons[1]->setDisabled(true);
+                construction_buttons[2]->setDisabled(true);
+                tradeButton->setDisabled(true);
+                end_turn_button->setDisabled(true);
                 current_circle_index = 0;
                 connect(timer,&QTimer::timeout,this,[this](){change_circle_index();});
                 return;
@@ -130,6 +155,11 @@ void Point_disp::display_befor_decide()
             {
                 setDisabled(false);
                 setEnabled(true);
+                construction_buttons[0]->setDisabled(true);
+                construction_buttons[1]->setDisabled(true);
+                construction_buttons[2]->setDisabled(true);
+                tradeButton->setDisabled(true);
+                end_turn_button->setDisabled(true);
                 current_circle_index = 0;
                 connect(timer,&QTimer::timeout,this,[this](){change_circle_index();});
                 return;
@@ -140,6 +170,11 @@ void Point_disp::display_befor_decide()
             {
                 setDisabled(false);
                 setEnabled(true);
+                construction_buttons[0]->setDisabled(true);
+                construction_buttons[1]->setDisabled(true);
+                construction_buttons[2]->setDisabled(true);
+                tradeButton->setDisabled(true);
+                end_turn_button->setDisabled(true);
                 current_circle_index = 0;
                 connect(timer,&QTimer::timeout,this,[this](){change_circle_index();});
                 return;

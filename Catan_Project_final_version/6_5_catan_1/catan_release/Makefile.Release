@@ -1846,7 +1846,11 @@ release/point_disp.o: ../widgets/point_disp.cpp ../widgets/point_disp.h \
 		../widgets/road.h \
 		D:/Qt/5.15.2/mingw81_64/include/QtWidgets/QLabel \
 		D:/Qt/5.15.2/mingw81_64/include/QtWidgets/qlabel.h \
-		../widgets/construction_button.h
+		../widgets/construction_button.h \
+		../widgets/end_turn_button.h \
+		../widgets/tradebutton.h \
+		D:/Qt/5.15.2/mingw81_64/include/QtWidgets/QWidget \
+		D:/Qt/5.15.2/mingw81_64/include/QtGui/QIcon
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\point_disp.o ..\widgets\point_disp.cpp
 
 release/road.o: ../widgets/road.cpp ../widgets/road.h \
@@ -2031,7 +2035,12 @@ release/road_disp.o: ../widgets/road_disp.cpp ../widgets/road_disp.h \
 		D:/Qt/5.15.2/mingw81_64/include/QtCore/QDebug \
 		D:/Qt/5.15.2/mingw81_64/include/QtWidgets/QMessageBox \
 		D:/Qt/5.15.2/mingw81_64/include/QtWidgets/qmessagebox.h \
-		D:/Qt/5.15.2/mingw81_64/include/QtWidgets/qdialog.h
+		D:/Qt/5.15.2/mingw81_64/include/QtWidgets/qdialog.h \
+		../widgets/construction_button.h \
+		../widgets/end_turn_button.h \
+		../widgets/tradebutton.h \
+		D:/Qt/5.15.2/mingw81_64/include/QtWidgets/QWidget \
+		D:/Qt/5.15.2/mingw81_64/include/QtGui/QIcon
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\road_disp.o ..\widgets\road_disp.cpp
 
 release/terrain.o: ../widgets/terrain.cpp ../widgets/terrain.h \

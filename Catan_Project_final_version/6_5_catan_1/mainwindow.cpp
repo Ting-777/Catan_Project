@@ -60,6 +60,8 @@ vector<QLabel*>longest_road_number_labels;//顺序存放　red green blue 玩家
 vector<Player>players;//顺序存放red green blue玩家对象
 vector<QLabel*>bk_labels;//顺序存放red green blue玩家的面板显示label
 vector<Construction_button*>construction_buttons;//顺序存放建路、建小房子、建大房子按钮
+End_turn_button* end_turn_button;
+TradeButton *tradeButton;
 extern int current_player_index;
 extern int game_status;
 extern bool is_in_normal_round;
@@ -310,9 +312,9 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     //交易按钮
-    TradeButton *tradeButton = new TradeButton(this);
+    tradeButton = new TradeButton(this);
     tradeButton->show();
-    connect(tradeButton,&TradeButton::clicked,[tradeButton](){
+    connect(tradeButton,&TradeButton::clicked,[](){
                tradeButton->pop();
                int temp=0;
                switch (current_player) {
@@ -340,14 +342,14 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     //结束轮次按钮
-    End_turn_button* end_turn_button=new End_turn_button(this);
+    end_turn_button=new End_turn_button(this);
     end_turn_button->show();
-    connect(diceButton,&QPushButton::clicked,end_turn_button,[end_turn_button,tradeButton](){
+    connect(diceButton,&QPushButton::clicked,end_turn_button,[](){
         end_turn_button->setDisabled(false);
         end_turn_button->get_status_label()->setPixmap(end_turn_button->get_status_pic(1));
         tradeButton->setDisabled(false);
     });
-    connect(end_turn_button,&QPushButton::clicked,[end_turn_button,diceButton,tradeButton](){
+    connect(end_turn_button,&QPushButton::clicked,[diceButton](){
         current_player_index=(current_player_index+1)%3;
         current_player=players[current_player_index].get_player_type();
         source_card_number[0]->setText(QString::number(players[current_player_index].get_owned_sources()[Terrain_type::lumber]));
@@ -398,7 +400,7 @@ MainWindow::MainWindow(QWidget *parent)
         Road_disp* r_disp=new Road_disp(i,this);
         roads_disp.push_back(r_disp);
     }
-    connect(build_road,&QPushButton::clicked,[tradeButton,end_turn_button](){
+    connect(build_road,&QPushButton::clicked,[](){
 
         switch (current_player) {
         case player_type::red_player:
@@ -436,7 +438,7 @@ MainWindow::MainWindow(QWidget *parent)
     for(int temp=0; temp<72;temp++)
         {
             Road_disp* temp_disp=roads_disp[temp];
-            connect(build_road,&QPushButton::clicked,build_road,[temp_disp,build_road,tradeButton,end_turn_button](){
+            connect(build_road,&QPushButton::clicked,build_road,[temp_disp,build_road](){
                 switch (current_player) {
                                 case player_type::red_player:
 
@@ -459,11 +461,7 @@ MainWindow::MainWindow(QWidget *parent)
                                 }break;
                                 default:return;break;
                 }
-                construction_buttons[0]->setDisabled(true);
-                construction_buttons[1]->setDisabled(true);
-                construction_buttons[2]->setDisabled(true);
-                tradeButton->setDisabled(true);
-                end_turn_button->setDisabled(true);
+
                 current_player_state=player_state::is_building_road;
                 temp_disp->display_befor_decide();
             });
@@ -476,7 +474,7 @@ MainWindow::MainWindow(QWidget *parent)
     for(int temp=0;temp<72;temp++)
     {
         Road_disp* r1=roads_disp[temp];
-        connect(r1,&Road_disp::has_built_road,[tradeButton,end_turn_button](){
+        connect(r1,&Road_disp::has_built_road,[](){
             if(!is_in_normal_round)
                return;
             construction_buttons[0]->setEnabled(true);
@@ -551,7 +549,7 @@ MainWindow::MainWindow(QWidget *parent)
         points_disp.push_back(p_disp);
     }
     //建小房子的按钮连接关系建立
-    connect(build_small_house,&QPushButton::clicked,build_small_house,[tradeButton,end_turn_button](){
+    connect(build_small_house,&QPushButton::clicked,build_small_house,[](){
 
         switch (current_player) {
         case player_type::red_player:
@@ -587,7 +585,7 @@ MainWindow::MainWindow(QWidget *parent)
         default: break;
         }});
     //建大房子按钮连接关系建立
-    connect(build_big_house,&QPushButton::clicked,build_big_house,[tradeButton,end_turn_button](){
+    connect(build_big_house,&QPushButton::clicked,build_big_house,[](){
 
         switch (current_player) {
 
@@ -627,7 +625,7 @@ MainWindow::MainWindow(QWidget *parent)
     for(int temp=0;temp<54;temp++)
     {
         Point_disp* temp_disp=points_disp[temp];
-        connect(build_small_house,&QPushButton::clicked,temp_disp,[temp_disp,build_small_house,tradeButton,end_turn_button](){
+        connect(build_small_house,&QPushButton::clicked,temp_disp,[temp_disp,build_small_house](){
             switch (current_player) {
                             case player_type::red_player:
                             if(players[0].get_owned_sources()[Terrain_type::lumber] <1 ||players[0].get_owned_sources()[Terrain_type::brick] <1||players[0].get_owned_sources()[Terrain_type::wool]<1 ||players[0].get_owned_sources()[Terrain_type::grain] <1)
@@ -650,14 +648,10 @@ MainWindow::MainWindow(QWidget *parent)
                             default:return;break;
             }
             current_player_state=player_state::is_building_small_house;
-            construction_buttons[0]->setDisabled(true);
-            construction_buttons[1]->setDisabled(true);
-            construction_buttons[2]->setDisabled(true);
-            tradeButton->setDisabled(true);
-            end_turn_button->setDisabled(true);
+
             temp_disp->display_befor_decide();
         });
-        connect(build_big_house,&QPushButton::clicked,temp_disp,[temp_disp,build_big_house,tradeButton,end_turn_button](){
+        connect(build_big_house,&QPushButton::clicked,temp_disp,[temp_disp,build_big_house](){
             switch (current_player) {
                             case player_type::red_player:
                             if(players[0].get_owned_sources()[Terrain_type::grain]<2||players[0].get_owned_sources()[Terrain_type::ore]<3)
@@ -680,11 +674,6 @@ MainWindow::MainWindow(QWidget *parent)
                             default:return;break;
             }
             current_player_state=player_state::is_building_big_house;
-            construction_buttons[0]->setDisabled(true);
-            construction_buttons[1]->setDisabled(true);
-            construction_buttons[2]->setDisabled(true);
-            tradeButton->setDisabled(true);
-            end_turn_button->setDisabled(true);
             temp_disp->display_befor_decide();
         });
     }
@@ -701,7 +690,7 @@ MainWindow::MainWindow(QWidget *parent)
     for(int temp=0;temp<54;temp++)
     {
         Point_disp* p1=points_disp[temp];
-        connect(p1,&Point_disp::has_built_small_house,[tradeButton,end_turn_button](){
+        connect(p1,&Point_disp::has_built_small_house,[](){
             if(!is_in_normal_round)
                return;
             construction_buttons[0]->setEnabled(true);
@@ -719,7 +708,7 @@ MainWindow::MainWindow(QWidget *parent)
     for(int temp=0;temp<54;temp++)
     {
         Point_disp* p1=points_disp[temp];
-        connect(p1,&Point_disp::has_built_big_house,[tradeButton,end_turn_button](){
+        connect(p1,&Point_disp::has_built_big_house,[](){
             if(!is_in_normal_round)
                return;
             construction_buttons[0]->setEnabled(true);
@@ -1290,5 +1279,7 @@ MainWindow::~MainWindow()
     current_player=player_type::red_player;
     current_player_state=player_state::idle;
     game_status=0;
+    end_turn_button = nullptr;
+    tradeButton = nullptr;
 }
 
