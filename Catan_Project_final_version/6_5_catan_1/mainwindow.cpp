@@ -399,11 +399,7 @@ MainWindow::MainWindow(QWidget *parent)
         roads_disp.push_back(r_disp);
     }
     connect(build_road,&QPushButton::clicked,[tradeButton,end_turn_button](){
-        construction_buttons[0]->setDisabled(true);
-        construction_buttons[1]->setDisabled(true);
-        construction_buttons[2]->setDisabled(true);
-        tradeButton->setDisabled(true);
-        end_turn_button->setDisabled(true);
+
         switch (current_player) {
         case player_type::red_player:
             if(players[0].get_owned_sources()[Terrain_type::lumber] ==0 ||players[0].get_owned_sources()[Terrain_type::brick] == 0)
@@ -440,7 +436,7 @@ MainWindow::MainWindow(QWidget *parent)
     for(int temp=0; temp<72;temp++)
         {
             Road_disp* temp_disp=roads_disp[temp];
-            connect(build_road,&QPushButton::clicked,build_road,[temp_disp,build_road](){
+            connect(build_road,&QPushButton::clicked,build_road,[temp_disp,build_road,tradeButton,end_turn_button](){
                 switch (current_player) {
                                 case player_type::red_player:
 
@@ -463,6 +459,11 @@ MainWindow::MainWindow(QWidget *parent)
                                 }break;
                                 default:return;break;
                 }
+                construction_buttons[0]->setDisabled(true);
+                construction_buttons[1]->setDisabled(true);
+                construction_buttons[2]->setDisabled(true);
+                tradeButton->setDisabled(true);
+                end_turn_button->setDisabled(true);
                 current_player_state=player_state::is_building_road;
                 temp_disp->display_befor_decide();
             });
@@ -551,11 +552,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
     //建小房子的按钮连接关系建立
     connect(build_small_house,&QPushButton::clicked,build_small_house,[tradeButton,end_turn_button](){
-        construction_buttons[0]->setDisabled(true);
-        construction_buttons[1]->setDisabled(true);
-        construction_buttons[2]->setDisabled(true);
-        tradeButton->setDisabled(true);
-        end_turn_button->setDisabled(true);
+
         switch (current_player) {
         case player_type::red_player:
             if(players[0].get_owned_sources()[Terrain_type::lumber] <1 ||players[0].get_owned_sources()[Terrain_type::brick] <1||players[0].get_owned_sources()[Terrain_type::wool]<1 ||players[0].get_owned_sources()[Terrain_type::grain] <1)
@@ -591,10 +588,9 @@ MainWindow::MainWindow(QWidget *parent)
         }});
     //建大房子按钮连接关系建立
     connect(build_big_house,&QPushButton::clicked,build_big_house,[tradeButton,end_turn_button](){
+
         switch (current_player) {
-        construction_buttons[0]->setDisabled(true);
-        construction_buttons[1]->setDisabled(true);
-        construction_buttons[2]->setDisabled(true);
+
         case player_type::red_player:
             if(players[0].get_owned_sources()[Terrain_type::grain]<2||players[0].get_owned_sources()[Terrain_type::ore]<3)
             {
@@ -631,7 +627,7 @@ MainWindow::MainWindow(QWidget *parent)
     for(int temp=0;temp<54;temp++)
     {
         Point_disp* temp_disp=points_disp[temp];
-        connect(build_small_house,&QPushButton::clicked,temp_disp,[temp_disp,build_small_house](){
+        connect(build_small_house,&QPushButton::clicked,temp_disp,[temp_disp,build_small_house,tradeButton,end_turn_button](){
             switch (current_player) {
                             case player_type::red_player:
                             if(players[0].get_owned_sources()[Terrain_type::lumber] <1 ||players[0].get_owned_sources()[Terrain_type::brick] <1||players[0].get_owned_sources()[Terrain_type::wool]<1 ||players[0].get_owned_sources()[Terrain_type::grain] <1)
@@ -654,9 +650,14 @@ MainWindow::MainWindow(QWidget *parent)
                             default:return;break;
             }
             current_player_state=player_state::is_building_small_house;
+            construction_buttons[0]->setDisabled(true);
+            construction_buttons[1]->setDisabled(true);
+            construction_buttons[2]->setDisabled(true);
+            tradeButton->setDisabled(true);
+            end_turn_button->setDisabled(true);
             temp_disp->display_befor_decide();
         });
-        connect(build_big_house,&QPushButton::clicked,temp_disp,[temp_disp,build_big_house](){
+        connect(build_big_house,&QPushButton::clicked,temp_disp,[temp_disp,build_big_house,tradeButton,end_turn_button](){
             switch (current_player) {
                             case player_type::red_player:
                             if(players[0].get_owned_sources()[Terrain_type::grain]<2||players[0].get_owned_sources()[Terrain_type::ore]<3)
@@ -679,6 +680,11 @@ MainWindow::MainWindow(QWidget *parent)
                             default:return;break;
             }
             current_player_state=player_state::is_building_big_house;
+            construction_buttons[0]->setDisabled(true);
+            construction_buttons[1]->setDisabled(true);
+            construction_buttons[2]->setDisabled(true);
+            tradeButton->setDisabled(true);
+            end_turn_button->setDisabled(true);
             temp_disp->display_befor_decide();
         });
     }
